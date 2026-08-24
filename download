@@ -1,0 +1,13 @@
+# respaldos locales de la plataforma: no deben subirse al repositorio
+RESPALDO*.json
+*.xlsx
+*.xls
+*.csv
+*.zip
+
+# sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

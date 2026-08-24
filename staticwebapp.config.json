@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/PEGAR_AQUI_EL_TENANT_ID/v2.0",
+          "clientIdSettingName": "AAD_CLIENT_ID",
+          "clientSecretSettingName": "AAD_CLIENT_SECRET"
+        }
+      }
+    }
+  },
+
+  "routes": [
+    {
+      "route": "/.auth/login/github",
+      "statusCode": 404
+    },
+    {
+      "route": "/.auth/login/twitter",
+      "statusCode": 404
+    },
+    {
+      "route": "/*",
+      "allowedRoles": ["authenticated"]
+    }
+  ],
+
+  "responseOverrides": {
+    "401": {
+      "statusCode": 302,
+      "redirect": "/.auth/login/aad"
+    },
+    "403": {
+      "rewrite": "/sin-acceso.html",
+      "statusCode": 403
+    }
+  },
+
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/.auth/*", "*.{png,jpg,svg,ico,json}"]
+  },
+
+  "globalHeaders": {
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "same-origin",
+    "Cache-Control": "no-store"
+  },
+
+  "platform": {
+    "apiRuntime": "node:18"
+  }
+}
